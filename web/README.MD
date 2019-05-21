@@ -7,10 +7,9 @@
 	* Could work offline / low bandwidth / flaky connection
     * Use Unit Testing
 	* Docker to containerize your app
-## Instruction
 ## Instructions
 
-### To run the app locally
+### To run the webapp locally
 
 1. Make sure you have `node` and `npm` installed, if not refer to below.
     - Mac users: https://changelog.com/posts/install-node-js-with-homebrew-on-os-x
@@ -30,16 +29,16 @@
 3. Clone the repository.
     - Using SSH (recommended):
     ```
-    $ git clone git@github.com:MisaOgura/react-express-docker-boilerplate.git
+    $ git clone git@github.com:hryer/efishery-test.git
     ```
     - Using HTTPS:
     ```
-    $ git clone https://github.com/MisaOgura/react-express-docker-boilerplate.git
+    $ git clone https://github.com/hryer/efishery-test.git
     ```
     
 4. Move into the cloned directory.
     ```
-    $ cd react-express-docker-boilerplate
+    $ cd efishery-test
     ```
 
 5. Install dependencies.
@@ -82,7 +81,11 @@ Docker is installed on the machine.
 
 3. Run the app in Docker.
     ```
-    $ ./run-app-in-docker.sh
+        docker-compose build
+    ```
+
+    ```
+        docker-compose up -d
     ```
     
 4. Yep, that's it. Visit `http://localhost:8080/` to checkout the app.
