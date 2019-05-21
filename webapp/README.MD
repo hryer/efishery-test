@@ -60,7 +60,7 @@
     ```
     - The production mode bundles the app into a much smaller size.
     
-8. Visit `http://localhost:8080/`: you should see a `hello world` message.
+8. Visit `http://localhost:3000/`: you should see a `hello world` message.
 
 9. Use the repo as a starting point of your app!
 
@@ -84,5 +84,5 @@ Docker is installed on the machine.
         docker-compose up --build
     ```
     
-4. Yep, that's it. Visit `http://localhost:8080/` to checkout the app.
+4. Yep, that's it. Visit `http://localhost:3000/` to checkout the app.
 
