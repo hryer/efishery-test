@@ -1,0 +1,12 @@
+FROM mhart/alpine-node:latest
+
+RUN mkdir -p /srv/app/webapp-server
+WORKDIR /srv/app/webapp-server
+
+COPY package*.json /srv/app/webapp-server
+
+RUN npm install
+
+COPY . /srv/app/webapp-server
+
+CMD ["npm", "run","dev"]
