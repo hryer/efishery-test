@@ -13,7 +13,7 @@ services:
     restart: always
     volumes:
       - ./client/src:/srv/app/webapp-client/src
-      - ./client/public:/srv/app/webapp-client/src/public
+      - ./client/public:/srv/app/webapp-client/public
     links:
       - server
     command:
@@ -35,7 +35,7 @@ services:
     depends_on:
       - couchdb
     command:
-      npm run dev
+      npm run start
   couchdb:
     container_name: couchdb
     hostname: couchdb.local
@@ -45,4 +45,4 @@ services:
       COUCHDB_ADMIN_PASS: iniadmin
     volumes: [ '~/data:/opt/couchdb/data' ]
     ports:
-    - "5984:5984"
+    - "8080:8080"

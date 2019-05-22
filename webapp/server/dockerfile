@@ -1,12 +1,14 @@
-FROM mhart/alpine-node:latest
+FROM mhart/alpine-node:10
 
 RUN mkdir -p /srv/app/webapp-server
+
 WORKDIR /srv/app/webapp-server
 
-COPY package*.json /srv/app/webapp-server
+COPY package.json /srv/app/webapp-server
+COPY package-lock.json /srv/app/webapp-server
 
-RUN npm install
+RUN yarn install
 
 COPY . /srv/app/webapp-server
 
-CMD ["npm", "run","dev"]
+CMD ["npm", "run","start"]

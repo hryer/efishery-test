@@ -1,12 +1,13 @@
-FROM mhart/alpine-node:latest
+FROM mhart/alpine-node:10
 
 RUN mkdir -p /srv/app/webapp-client
 
 WORKDIR /srv/app/webapp-client
 
-COPY package*.json /srv/app/webapp-client
+COPY package.json /srv/app/webapp-client
+COPY package-lock.json /srv/app/webapp-client
 
-RUN npm install
+RUN npm install -f
 
 COPY . /srv/app/webapp-client
 
