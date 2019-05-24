@@ -45,4 +45,4 @@ services:
       COUCHDB_ADMIN_PASS: iniadmin
     volumes: [ '~/data:/opt/couchdb/data' ]
     ports:
-    - "8080:8080"
+    - "5984:5984"
