@@ -81,7 +81,7 @@ Docker is installed on the machine.
 
 3. Run the app in Docker.
     ```
-        docker-compose up --build
+        docker-compose up -D --build
     ```
     
 4. Yep, that's it. Visit `http://localhost:3000/` to checkout the app.
