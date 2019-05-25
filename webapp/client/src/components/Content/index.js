@@ -19,7 +19,8 @@ class Content extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      input_text: '',
+      input_task: '',
+      input_tag: '',
       _rerender: this.props._rerender
     }
     this.changeDone.bind(this);
@@ -35,7 +36,7 @@ class Content extends React.Component {
         </p>
 
         <h2>
-          todos: <button onClick={this.upload}>
+          Tasks: <button onClick={this.upload}>
             {`upload (${todosStore.countUnuploadeds()})`}
           </button>
         </h2>
@@ -44,6 +45,48 @@ class Content extends React.Component {
         </pre>
 
         <Box>
+          <Box
+            border={{ side: 'top', color: 'light-3' }}
+            direction="row"
+            pad="medium"
+            gap="small"
+            align="center">
+            <Box fill>
+              <Text
+                color={'green'}
+              >
+                Complete
+              </Text>
+            </Box>
+            <Box fill>
+              <Text
+                color={'green'}
+              >
+                No
+              </Text>
+            </Box>
+            <Box fill>
+              <Text color={'green'} >
+                Tasks
+              </Text>
+            </Box>
+            <Box fill>
+              <Text color={'green'} >
+                Tags
+              </Text>
+            </Box>
+            <Box fill>
+              <Text color={'green'} >
+                Isupload
+              </Text>
+            </Box>
+            <Box fill>
+              <Text color={'green'} >
+                Deleted
+              </Text>
+            </Box>
+          </Box>
+
           {
             todosStore.data.map((todo, index) => (
               <Box
@@ -53,7 +96,9 @@ class Content extends React.Component {
                 gap="small"
                 align="center"
                 key={todo._id}>
-                <CheckBox checked={todo.done} onChange={e => this.changeDone(todo)} />
+                <Box fill>
+                  <CheckBox checked={todo.done} onChange={e => this.changeDone(todo)} />
+                </Box>
                 <Box fill>
                   <Text
                     style={{ textDecoration: todo.done ? 'line-through' : '' }}
@@ -67,24 +112,42 @@ class Content extends React.Component {
                     style={{ textDecoration: todo.done ? 'line-through' : '' }}
                     color={todo.done ? 'light-5' : 'dark-1'}
                   >
-                    {todo.text}
+                    {todo.task}
+                  </Text>
+                </Box>
+                <Box fill>
+                  <Text
+                    style={{ textDecoration: todo.done ? 'line-through' : '' }}
+                    color={todo.done ? 'light-5' : 'dark-1'}
+                  >
+                    {todo.tag}
+                  </Text>
+                </Box>
+                <Box fill>
+                  <Text
+                    style={{ textDecoration: todo.done ? 'line-through' : '' }}
+                    color={todo.done ? 'light-5' : 'dark-1'}
+                  >
                     {
-                      !todosStore.checkIsUploaded(todo) && (
-                        ` (belum upload)`
-                      )
+                      !todosStore.checkIsUploaded(todo) ? (`not uploaded`) : (`already upload`)
                     }
                   </Text>
                 </Box>
-                <Button icon={<FormClose />} onClick={() => this.deleteTodo(todo._id)} />
+                <Box fill>
+                  <Button icon={<FormClose />} onClick={() => this.deleteTodo(todo._id)} />
+                </Box>
               </Box>
             ))
           }
         </Box>
 
-        <h2>add new todo</h2>
+        <h2>Add new Task</h2>
         <form onSubmit={this.addTodo}>
-          <p><input type='text' value={this.state.input_text} onChange={this.setInput_text} /></p>
-          <p><button>submit</button></p>
+          <Text>Task :</Text>
+          <p><input type='text' value={this.state.input_task} onChange={this.setInput_task} /></p>
+          <Text>Tag : </Text>
+          <p><input type='text' value={this.state.tag} onChange={this.setInput_tag} /></p>
+          <p><button>Submit</button></p>
         </form>
       </div>
     );
@@ -98,10 +161,16 @@ class Content extends React.Component {
     this.unsubTodos();
   }
 
-  setInput_text = (event) => {
+  setInput_task = (event) => {
     this.setState({
-      input_text: event.target.value,
+      input_task: event.target.value
     });
+  }
+
+  setInput_tag = (event) => {
+    this.setState({
+      input_tag: event.target.value
+    })
   }
 
   logout = async () => {
@@ -112,10 +181,16 @@ class Content extends React.Component {
   addTodo = async (event) => {
     event.preventDefault();
     await todosStore.addItem({
-      text: this.state.input_text,
+      task: this.state.input_task,
+      tag: this.state.input_tag,
       done: false,
     }, userStore.data);
-    this.setState({ input_text: '' });
+    this.setState(
+      { 
+        input_task: '',
+        input_tag: ''
+      }
+    );
   }
 
   deleteTodo = async (id) => {
@@ -126,7 +201,7 @@ class Content extends React.Component {
     event.done = !event.done;
     console.log(event.done);
     console.log(event);
-    await todosStore.editItem(event._id,{
+    await todosStore.editItem(event._id, {
       done: event.done
     });
   }

@@ -19,9 +19,9 @@ window.todosStore = todosStore;
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       isInitialized: false,
-       _rerender: new Date(),
+      _rerender: new Date(),
     };
   }
 
@@ -32,13 +32,13 @@ class App extends React.Component {
 
     return (
       userStore.data.email ? (
-        <> 
+        <Grommet full={true} theme={grommet}>
           <Header />
-          <Content _rerender={this.state._rerender}/>
-        </>
+          <Content _rerender={this.state._rerender} />
+        </Grommet>
       ) : (
-        <Login />
-      )
+          <Login />
+        )
     );
   }
 
