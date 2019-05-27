@@ -13,8 +13,6 @@ import todosStore from '../../store/todos';
 window.userStore = userStore;
 window.todosStore = todosStore;
 
-// import * as Styled from './styles';
-
 class Content extends React.Component {
   constructor(props) {
     super(props);
@@ -55,7 +53,7 @@ class Content extends React.Component {
               <Text
                 color={'green'}
               >
-                Complete
+                Completed
               </Text>
             </Box>
             <Box fill>

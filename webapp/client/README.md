@@ -1,4 +1,4 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Custom Create React App](https://github.com/facebook/create-react-app) edited by Hryer.
 
 ## Available Scripts
 
@@ -37,32 +37,30 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+## DB Configuration
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+If you using dockerize db create user for auth db and create the database using ```docker exec -it db_container_name sh``` for db container name you check it with ```docker ps -a``` after you build docker container
+```
+  DB_NAME = 'efishery_task';
+  DB_AUTH = {
+    username: 'admin',
+    password: 'iniadmin',
+  };
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+If you want to change from local database (dockerize couchdb) to Production 
 
-### Code Splitting
+You can change db config on the model at store folder to this
+From 
+``` 
+  get urlRemote() {
+    return config.COUCH_URL_LOCAL;
+  }
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+To
+```
+  get urlRemote() {
+    return config.COUCH_URL_PROD;
+  }
+```
