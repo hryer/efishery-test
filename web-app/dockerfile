@@ -1,0 +1,14 @@
+FROM mhart/alpine-node:10
+
+RUN mkdir -p /srv/app/web-app
+
+WORKDIR /srv/app/web-app
+
+COPY package.json /srv/app/web-app
+COPY package-lock.json /srv/app/web-app
+
+RUN npm install -f
+
+COPY . /srv/app/web-app
+
+CMD ["npm", "start"]

@@ -1,0 +1,14 @@
+FROM mhart/alpine-node:10
+
+RUN mkdir -p /srv/app/command-line
+
+WORKDIR /srv/app/command-line
+
+COPY package.json /srv/app/command-line
+COPY package-lock.json /srv/app/command-line
+
+RUN yarn -f
+
+COPY . /srv/app/command-line
+
+CMD ["yarn", "run","start"]
