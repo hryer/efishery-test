@@ -6,7 +6,7 @@ import { Router } from '@reach/router';
 
 import Loading from '../Loading';
 
-import userStore from './../../store/user';
+import userStore from '../../store/user';
 import todosStore from '../../store/todos';
 
 // for playin in browser console
@@ -197,8 +197,6 @@ class Content extends React.Component {
 
   changeDone = async (event) => {
     event.done = !event.done;
-    console.log(event.done);
-    console.log(event);
     await todosStore.editItem(event._id, {
       done: event.done
     });
