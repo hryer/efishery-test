@@ -28,36 +28,42 @@ const sync = () => {
  * @returns {String} Status
  */
 const addTodo = (answer) => {
-  const done = false;
-  const todo = {
-    created_at: new Date().toISOString(),
-    update_at: new Date().toISOString(),
-    task: answer.task,
-    tag: answer.tag,
-    done: false
-  }
-  console.info('msuk pak eko');
-
-  db.post(todo).then(function (result) {
-    console.info("everything is A-OK");
-    console.info(result);
-  }).catch(function (err) {
-    assert.equal(null,err);
-  });
+  try {
+    const todo = {
+      created_at: new Date().toISOString(),
+      update_at: new Date().toISOString(),
+      task: answer.task,
+      tag: answer.tag,
+      done: false
+    }
+    console.info('msuk pak eko');
+  
+    db.post(todo).then( result => {
+      console.info("everything is A-OK");
+      console.info(result);
+    }).catch(function (err) {
+      console.info(`add task failed ${err}`);
+    });
+  } catch (error) {
+    console.info(`add task failed ${error}`);
+  } 
 }
 
 /**
  * @function  [showTodos]
  * @returns {Json} todos
  */
-const showTodos = () => {
-  console.info('connect');
-  db.allDocs({include_docs: true, descending: true}).then(function(doc) {
-    console.info(doc.rows);
-    redrawTodosConsole(doc.rows);
-  }).catch(function (err) {
-    console.info(err);
-  });
+const showTodos = (type) => {
+  try {
+    console.info('connect');
+    db.allDocs({include_docs: true, descending: true}).then(function(doc) {
+      redrawTodosConsole(type,doc.rows);
+    }).catch(function (err) {
+      console.info(`Read task Failed ${err}`);
+    });
+  } catch (error) {
+    console.info(`Read task Failed ${error}`)
+  }
 };
 
 /**
@@ -65,6 +71,16 @@ const showTodos = () => {
  * @returns {Sting} status
  */
 const editTodo = (todo) => {
+  try {
+    db.put(todo).then( result => {
+      console.info("everything is A-OK");
+      console.info(result);
+    }).catch(function (err) {
+      console.info(`edit task failed ${err}`);
+    });
+  } catch (error) {
+    console.info(`edit task failed ${error}`);
+  }
 };
 
 /**
@@ -81,18 +97,15 @@ const deleteTodo = (todo) => {
   }
 }
 
-/**
- * @function  [statusTodo]
- * @returns [Json] todo
- */
-const statusTodo = () => {
-}
-
-const redrawTodosConsole = (todos) => {
+const redrawTodosConsole = (type,todos) => {
   console.info(`No. Task Tag Done`);
-  // console.info(todos);
   todos.forEach(function(todo,i) {
-    console.info(todo.doc);
+    todo = todo.doc;
+    if(type === 0){
+      console.info(`${i+1}. ${todo.task} ${todo.tag} ${todo.status} `);
+    }else {
+      console.info(`${i+1}. ${todo._id} ${todo._rev} ${todo.task} ${todo.tag} ${todo.status} `);
+    }
   });
 }
 
@@ -101,6 +114,5 @@ module.exports = {
   addTodo, 
   showTodos,
   editTodo,
-  statusTodo,
   deleteTodo
 };

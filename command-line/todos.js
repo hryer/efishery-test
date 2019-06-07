@@ -16,7 +16,7 @@ function toLower(v) {
   return v.toLowerCase();
 }
 
-const { addTodo, showTodos, statusTodo, editTodo, deleteTodo } = require('./logic');
+const { addTodo, showTodos, editTodo, deleteTodo } = require('./logic');
 
 const addQuestions = [
   {
@@ -39,6 +39,11 @@ const editQuestions = [
   },
   {
     type : 'input',
+    name : '_rev',
+    message : 'Enter rev ...'
+  },
+  {
+    type : 'input',
     name : 'task',
     message : 'Enter task ...'
   },
@@ -46,10 +51,33 @@ const editQuestions = [
     type : 'input',
     name : 'tag',
     message : 'Enter tag ...'
+  },
+  {
+    type : 'input',
+    name : 'status',
+    message : 'Enter status ...'
   }
 ];
 
-const idQuestion = [
+const statusQuestion = [
+  {
+    type : 'input',
+    name : '_id',
+    message : 'Enter id ...'
+  },
+  {
+    type : 'input',
+    name : '_rev',
+    message : 'Enter rev ...'
+  },
+  {
+    type : 'input',
+    name : 'status',
+    message : 'Enter status ...'
+  }
+]
+
+const deleteQuestion = [
   {
     type : 'input',
     name : '_id',
@@ -74,13 +102,13 @@ program
     db.info(function(err, info) {
       if(!err) {
         db.changes({
-          since: info.update_seq,
-          live: true
-        }).on('change', console.info(info));  
+            since: info.update_seq,
+            live: true
+          });  
       }
     });
 
-    showTodos()
+    showTodos(0);
   });
 
 program
@@ -104,7 +132,6 @@ program
   .description('Add a task')
   .action(() => {
     prompt(addQuestions).then(answers => {
-      console.info(answers);
       addTodo(answers);
     })
   });
@@ -115,7 +142,7 @@ program
   .description('Edit a task')
   .action(() => {
     prompt(editQuestions).then(answers => {
-      console.info(answers);
+      showTodos(1);
       editTodo(answers);
     })
   });
@@ -125,9 +152,8 @@ program
   .alias('c')
   .description('Change status task')
   .action(() => {
-    prompt(idQuestion).then(answers => {
-      console.info(answers);
-      statusTodo(answers);
+    prompt(statusQuestion).then(answers => {
+      editTodo(answers);
     })
   });
 
@@ -136,8 +162,7 @@ program
   .alias('d')
   .description('Delete Task')
   .action(() => {
-    prompt(idQuestion).then(answers => {
-      console.info(answers);
+    prompt(deleteQuestion).then(answers => {
       deleteTodo(answers);
     })
   });
