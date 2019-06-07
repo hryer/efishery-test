@@ -15,12 +15,12 @@ Usage: todos [command] or node todos [command]
   Commands:
 
     addTask | a           Add a task
-    getTaskList | r     Get task list
-    editTask | e   Edit Task
-    deleteTask | d  Delete Task
-    statusTask | c       Edit Status Task
+    getTaskList | r       Get task list
+    editTask | e          Edit Task
+    deleteTask | d        Delete Task
+    statusTask | c        Edit Status Task
 
-  Contact management system
+  Task management system
 
   Options:
 
