@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('assert');
-const PouchDB = require('./node_modules/pouchdb/lib');
+const PouchDB = require('pouchdb');
 
 var db = new PouchDB('todos_harry');
 var remoteCouch = 'http://admin:iniadmin@localhost:5984/todos_harry';
@@ -61,57 +61,46 @@ const showTodos = () => {
 };
 
 /**
- * @function  [updateTodo]
+ * @function  [editTodo]
  * @returns {Sting} status
  */
-const updateTodo = (_id, todo) => {
-  assert.equal(null, err);
-    console.info('Updated successfully');
-
-  db.update({ _id }, contact)
-  .exec((err, status) => {
-    assert.equal(null, err);
-    console.info('Updated successfully');
-    db.disconnect();
-  });
+const editTodo = (todo) => {
 };
 
 /**
- * @function  [deleteContact]
+ * @function  [
+ * ]
  * @returns {String} status
  */
-const deleteContact = (_id) => {
-  Contact.remove({ _id })
-  .exec((err, status) => {
-    assert.equal(null, err);
-    console.info('Deleted successfully');
-    db.disconnect();
-  })
+const deleteTodo = (todo) => {
+  try {
+    db.remove(todo);
+    console.info('Delete Task Success');
+  } catch (error) {
+    console.info(`Delete task failed ${error}`);
+  }
 }
 
 /**
- * @function  [getContactList]
- * @returns [contactlist] contacts
+ * @function  [statusTodo]
+ * @returns [Json] todo
  */
-const getContactList = () => {
-  Contact.find()
-  .exec((err, contacts) => {
-    assert.equal(null, err);
-    console.info(contacts);
-    console.info(`${contacts.length} matches`);
-    db.disconnect();
-  })
+const statusTodo = () => {
 }
 
 const redrawTodosConsole = (todos) => {
   console.info(`No. Task Tag Done`);
+  // console.info(todos);
   todos.forEach(function(todo,i) {
-    console.info(`${i}. ${todo.doc.id} `);
+    console.info(todo.doc);
   });
 }
 
 // Export all methods
 module.exports = {   
   addTodo, 
-  showTodos, 
+  showTodos,
+  editTodo,
+  statusTodo,
+  deleteTodo
 };

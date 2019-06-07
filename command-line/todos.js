@@ -16,9 +16,9 @@ function toLower(v) {
   return v.toLowerCase();
 }
 
-const { addTodo, showTodos } = require('./logic');
+const { addTodo, showTodos, statusTodo, editTodo, deleteTodo } = require('./logic');
 
-const questions = [
+const addQuestions = [
   {
     type : 'input',
     name : 'task',
@@ -30,6 +30,37 @@ const questions = [
     message : 'Enter tag ...'
   }
 ];
+
+const editQuestions = [
+  {
+    type : 'input',
+    name : '_id',
+    message: 'Enter id ...'
+  },
+  {
+    type : 'input',
+    name : 'task',
+    message : 'Enter task ...'
+  },
+  {
+    type : 'input',
+    name : 'tag',
+    message : 'Enter tag ...'
+  }
+];
+
+const idQuestion = [
+  {
+    type : 'input',
+    name : '_id',
+    message : 'Enter id ...'
+  },
+  {
+    type : 'input',
+    name : '_rev',
+    message : 'Enter rev ...'
+  }
+]
 
 program
   .version('0.0.1')
@@ -54,7 +85,7 @@ program
 
 program
   .command('syncDB')
-  .alias('sd')
+  .alias('s')
   .description('Synronize DB')
   .action(() => {
     try {
@@ -72,10 +103,43 @@ program
   .alias('a')
   .description('Add a task')
   .action(() => {
-    prompt(questions).then(answers => {
-      console.info(answers)
+    prompt(addQuestions).then(answers => {
+      console.info(answers);
       addTodo(answers);
     })
   });
 
-  program.parse(process.argv);
+program
+  .command('editTask')
+  .alias('e')
+  .description('Edit a task')
+  .action(() => {
+    prompt(editQuestions).then(answers => {
+      console.info(answers);
+      editTodo(answers);
+    })
+  });
+
+program
+  .command('statusTask')
+  .alias('c')
+  .description('Change status task')
+  .action(() => {
+    prompt(idQuestion).then(answers => {
+      console.info(answers);
+      statusTodo(answers);
+    })
+  });
+
+program
+  .command('deleteTask')
+  .alias('d')
+  .description('Delete Task')
+  .action(() => {
+    prompt(idQuestion).then(answers => {
+      console.info(answers);
+      deleteTodo(answers);
+    })
+  });
+
+program.parse(process.argv);
